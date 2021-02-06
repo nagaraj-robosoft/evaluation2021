@@ -62,6 +62,10 @@ export default class NewsDetails extends Vue {
     });
   }
 
+  beforeDestroy() {
+    EventBus.$off(["REFRESH_DETAIL"]);
+  }
+
   launchProgram() {
     const newsData = localStorage.getItem("newsData");
     if (newsData) {

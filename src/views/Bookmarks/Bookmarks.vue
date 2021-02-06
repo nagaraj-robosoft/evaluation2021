@@ -41,6 +41,10 @@ export default class Bookmarks extends Vue {
       this.newsList = payLoad;
     });
   }
+
+  beforeDestroy() {
+    EventBus.$off(["REFRESH_LIST"]);
+  }
 }
 </script>
 

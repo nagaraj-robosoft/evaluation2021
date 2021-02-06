@@ -78,6 +78,10 @@ export default class Home extends Vue {
     });
   }
 
+  beforeDestroy() {
+    EventBus.$off(["SEARCH", "HOME"]);
+  }
+
   launchProgram(callback?: Function, from?: string) {
     this.topNews = [];
     this.count = 0;
