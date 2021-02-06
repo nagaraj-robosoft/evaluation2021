@@ -12,8 +12,8 @@ export default class ApiService {
         })
     }
 
-    static searchNews(query: string) {
-        const url = `/everything?q=${query}&apiKey=${apiKeys.newsAPI}`
+    static searchNews(query: string, page: number, pageSize: number = 10) {
+        const url = `/everything?q=${query}&page=${page}&pageSize=${pageSize}&apiKey=${apiKeys.newsAPI}`
 
         return axios({
             url,

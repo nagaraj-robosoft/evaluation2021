@@ -30,7 +30,7 @@
                 : require('@/assets/images/home_bookmark.png')
             "
             alt="Bookmark"
-            @click="bookmark($event)"
+            @click="type === 'bookmark' ? unbookmark($event) : bookmark($event)"
           />
         </div>
         <div></div>
@@ -87,21 +87,44 @@ export default class Newscard extends Vue {
             }
           }
         });
+      } else {
+        this.createList();
       }
     } else {
-      let news = [];
-      news.push(this.content);
-      localStorage.setItem("bookmark-news", JSON.stringify(news));
+      this.createList();
+    }
+  }
+
+  createList() {
+    let news = [];
+    news.push(this.content);
+    localStorage.setItem("bookmark-news", JSON.stringify(news));
+  }
+
+  unbookmark($event: any) {
+    $event.stopPropagation();
+    const tempList = localStorage.getItem("bookmark-news");
+    if (tempList) {
+      let localData = JSON.parse(tempList);
+      if (localData && localData.length) {
+        localData = localData.filter(
+          (element: any) => element.title !== this.content.title
+        );
+        localStorage.setItem("bookmark-news", JSON.stringify(localData));
+        EventBus.$emit("REFRESH_LIST", localData);
+      }
     }
   }
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
+@import "@/styles/mixins";
+
 .news-card {
   cursor: pointer;
   .news-contents {
-    display: flex;
+    @include flexbox();
     padding-bottom: 22px;
     border-bottom: 1px solid #d9d9d9;
     padding-top: 22px;
@@ -120,8 +143,8 @@ export default class Newscard extends Vue {
       padding-top: 15px;
       width: 100%;
       .sub-contents-heading {
-        display: flex;
-        justify-content: space-between;
+        @include flexbox();
+        @include justify-content(space-between);
         padding-bottom: 10px;
         .sub-contents-text {
           font-size: 22px;

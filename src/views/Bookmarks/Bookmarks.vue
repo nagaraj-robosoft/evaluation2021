@@ -13,13 +13,16 @@
         />
       </template>
     </div>
+    <div v-else>
+      <h4 class="no-records">No Records</h4>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Newscard from "@/components/Newscard.vue";
-import ApiService from "@/api/services/apiservice";
+import EventBus from "@/services/eventBus";
 
 @Component({
   components: {
@@ -34,6 +37,9 @@ export default class Bookmarks extends Vue {
     if (tempNews) {
       this.newsList = JSON.parse(tempNews);
     }
+    EventBus.$on("REFRESH_LIST", (payLoad: any) => {
+      this.newsList = payLoad;
+    });
   }
 }
 </script>
@@ -56,6 +62,9 @@ export default class Bookmarks extends Vue {
   }
   .bookmark-news {
     margin-bottom: 54px;
+  }
+  .no-records {
+    text-align: center;
   }
 }
 </style>

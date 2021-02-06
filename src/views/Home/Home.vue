@@ -62,7 +62,7 @@ export default class Home extends Vue {
       this.searchText = payLoad;
       this.topNews = [];
       this.count = 0;
-      ApiService.searchNews(payLoad).then((res: any) => {
+      ApiService.searchNews(payLoad, this.count).then((res: any) => {
         if (res && res.articles && res.articles.length) {
           this.popularNews = res.articles;
         }
@@ -89,7 +89,7 @@ export default class Home extends Vue {
     if (query && query.searchText && !from) {
       this.isSearchPage = true;
       this.searchText = query.searchText;
-      ApiService.searchNews(this.searchText).then((res: any) => {
+      ApiService.searchNews(this.searchText, this.count).then((res: any) => {
         if (res && res.articles && res.articles.length) {
           this.popularNews = res.articles;
         }
@@ -117,7 +117,7 @@ export default class Home extends Vue {
     setTimeout(() => {
       this.count += 1;
       if (this.isSearchPage) {
-        ApiService.searchNews(this.searchText).then((res: any) => {
+        ApiService.searchNews(this.searchText, this.count).then((res: any) => {
           this.loading = false;
           this.totalResults = res.totalResults;
           if (res && res.articles && res.articles.length) {

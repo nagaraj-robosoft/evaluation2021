@@ -76,10 +76,12 @@ export default class NewsDetails extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+@import "@/styles/mixins";
+
 .details-screen {
   height: calc(100vh - 150px);
   .news-detail {
-    display: flex;
+    @include flexbox();
     padding-bottom: 10px;
     padding-top: 16px;
     .news-detail-content {
@@ -98,7 +100,7 @@ export default class NewsDetails extends Vue {
         padding: 5px 14px;
       }
       .detail-contents {
-        display: flex;
+        @include flexbox();
         padding-top: 25px;
         padding-bottom: 40px;
         .detail-image {
