@@ -60,7 +60,7 @@ export default class Newscard extends Vue {
     localStorage.setItem("newsData", JSON.stringify(this.content));
     const currentRoute = this.$route;
     if (currentRoute.path !== "/news-detail") {
-      this.$router.replace({
+      this.$router.push({
         path: "/news-detail",
       });
     } else {
