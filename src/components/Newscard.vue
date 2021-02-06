@@ -25,6 +25,8 @@
             :src="
               type === 'bookmark'
                 ? require('@/assets/images/bookmark.png')
+                : clicked
+                ? require('@/assets/images/bookmark.png')
                 : require('@/assets/images/home_bookmark.png')
             "
             alt="Bookmark"
@@ -52,6 +54,7 @@ export default class Newscard extends Vue {
   @Prop() content!: any;
   @Prop() type!: string;
   @Prop() noBorder!: boolean;
+  clicked: boolean = false;
 
   viewDetails() {
     localStorage.setItem("newsData", JSON.stringify(this.content));
@@ -67,6 +70,7 @@ export default class Newscard extends Vue {
 
   bookmark($event: any) {
     $event.stopPropagation();
+    this.clicked = true;
     const tempList = localStorage.getItem("bookmark-news");
     if (tempList) {
       let localData = JSON.parse(tempList);
